@@ -15,15 +15,23 @@ public class LinkedQueue<T> implements QueueADT<T>{
   public LinkedQueue(){
     count = 0;
     head = tail = null;
-  }
+  }// LinkedQueue()
 
   /**
    * Adds the specified element to the tail of this queue.
    * @param element the element to be added to the tail of the queue
    */
-  public void enqueue(T element){
-    return;
-  }
+  public void enqueue (T element){
+	  LinearNode<T> node = new LinearNode<T>(element);
+    if(isEmpty()){
+	    head = node;
+	    tail = node;
+    }else{
+      tail.setNext(node);
+      tail = node;
+    }// if
+    count++;
+  }// enqueue()
 
   /**
    * Removes the element at the head of this queue and returns a
@@ -31,9 +39,22 @@ public class LinkedQueue<T> implements QueueADT<T>{
    * @return the element at the head of this queue
    * @throws EmptyCollectionException if the queue is empty
    */
-  public T dequeue() throws EmptyCollectionException{
-    return null;
-  }
+  public T dequeue()throws EmptyCollectionException{
+	  if(count==0){
+		  throw new EmptyCollectionException("queue");
+    }else if(count==1){
+	    T result = head.getElement();
+	    head = null;
+	    tail = null;
+	    count = 0;
+	    return result;
+    }else{
+	    T result = head.getElement();
+	    head = head.getNext();
+	    count--;
+	    return result;
+    }// if
+  }// dequeue()
 
   /**
    * Returns a reference to the element at the head of this queue.
@@ -42,9 +63,13 @@ public class LinkedQueue<T> implements QueueADT<T>{
    * @throws EmptyCollectionsException if the queue is empty
    */
   public T first() throws EmptyCollectionException{
-   // To be completed as a Programming Project
-    return null;
-  }
+    // To be completed as a Programming Project
+    if(count == 0){
+      throw new EmptyCollectionException("Nothing");
+    }else{
+      return head.getElement();
+    }// if
+  }// first()
 
   /**
   * Returns true if this queue is empty and false otherwise.
@@ -52,8 +77,12 @@ public class LinkedQueue<T> implements QueueADT<T>{
   */
   public boolean isEmpty(){
     // To be completed as a Programming Project
-    return false;
-  }
+    if(count == 0){
+      return true;
+    }else{
+      return false;
+    }// if
+  }// isEmpty()
 
   /**
    * Returns the number of elements currently in this queue.
@@ -61,8 +90,8 @@ public class LinkedQueue<T> implements QueueADT<T>{
    */
   public int size(){
     // To be completed as a Programming Project
-    return 0;
-  }
+    return count;
+  }// size()
 
   /**
    * Returns a string representation of this queue.
@@ -74,7 +103,7 @@ public class LinkedQueue<T> implements QueueADT<T>{
     while(trav != null){
       result += trav.getElement();
       trav = trav.getNext();
-    }
+    }// while
     return result;
-  }
-}
+  }// toString()
+}// LinkedQueue
